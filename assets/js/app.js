@@ -264,6 +264,33 @@ class App {
     this.renderer.setSize(window.innerWidth, window.innerHeight);
   }
 
+  backMusicLoader(){
+    this.listener = new THREE.AudioListener();
+    this.camera.add(this.listener);
+
+    this.backSound = new THREE.Audio(this.listener);
+    this.scene.add(this.backSound);
+    const audioLoader = new THREE.AudioLoader();
+
+    audioLoader.load(
+      '../sounds/Else-Paris-128k.ogg',
+      function (buffer) {
+        this.backSound.setBuffer(buffer);
+        this.backSound.setLoop(true);
+        this.backSound.setVolume(0.5);
+        this.backSound.play();
+      },
+      function (xhr) {
+        console.log((xhr.loaded / xhr.total) * 100 + '% loaded');
+      },
+      function (err) {
+        console.log('An error happened');
+      }
+    );
+
+
+  }
+
   textLoader() {
     // init text
     const loader1 = new THREE.FontLoader();
@@ -551,6 +578,7 @@ class App {
 
   initScene() {
     this.removeMenu();
+    this.backMusicLoader();
     this.Ground.children[0].material.opacity = 0.9;
     setTimeout(() => {
       this.scene.add(this.planeXYG);
@@ -1024,14 +1052,6 @@ class App {
       this.raycasterHead.set(pos, this.cameraVector);
       let blocked = false;
 
-      // let pos2D = new THREE.Vector2(pos.x, pos.z);
-      // let middle = new THREE.Vector2(0, 0);
-      // let rad = pos2D.distanceTo(middle);
-      //console.log(rad);
-      // let beyond = false;
-
-      // if (rad > 7 || pos.y > 8 || pos.y < -1) beyond = true;
-
       let intersect = this.raycasterHead.intersectObjects(this.boundary, true);
 
       if (intersect.length > 0) {
@@ -1221,7 +1241,7 @@ class App {
           this.onMouseMoveF(event);
         }
       }
-    });
+    }, false);
 
     document.addEventListener('mousedown', (event) => {
       event.preventDefault();
@@ -1242,20 +1262,20 @@ class App {
           this.levelMove();
         }
       }
-    });
+    }, false);
 
     document.addEventListener('keydown', (event) => {
       event.preventDefault();
       this._onKeyDowns.forEach((fn) => {
         fn(event);
       });
-    });
+    }, false);
     document.addEventListener('keyup', (event) => {
       event.preventDefault();
       this._onKeyUp.forEach((fn) => {
         fn(event);
       });
-    });
+    }, false);
   }
 
   coordinate(coordX, coordY) {
