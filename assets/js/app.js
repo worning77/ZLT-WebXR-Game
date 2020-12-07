@@ -270,7 +270,7 @@ this.camera.add(this.listener1);
     this.backSound = new THREE.Audio(this.listener1);
     this.scene.add(this.backSound);
     const audioLoader = new THREE.AudioLoader();
-    const musicfile = '../../assets/sounds/Else-Paris-128k.ogg';
+    const musicfile = '../assets/sounds/Else-Paris-128k.ogg';
 
     const self = this;
     audioLoader.load(musicfile, function (buffer) {
