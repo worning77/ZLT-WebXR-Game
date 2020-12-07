@@ -1,6 +1,5 @@
 import * as THREE from './libs/three/three.module.js';
 
-
 import { OrbitControls } from './libs/three/jsm/OrbitControls.js';
 import { XRControllerModelFactory } from './libs/three/jsm/XRControllerModelFactory.js';
 import { CanvasUI } from './libs/CanvasUI.js';
@@ -27,7 +26,6 @@ import { Inputs } from './inputs.js';
 import { Levels } from './level.js';
 
 // import { LBlock, TBlock, ZBlock } from './shapes/'
-
 
 const SkyTexture = function (width, height) {
   this.canvas;
@@ -59,24 +57,21 @@ const SkyTexture = function (width, height) {
   };
 };
 
-const background= function() {
+const background = function () {
   this.worldSize = 30;
-    this.createSkySphere = function (texture) {
-      texture = new THREE.CanvasTexture(texture);
-      const skySphere_geom = new THREE.SphereGeometry(this.worldSize, 100, 100);
-      const skySphere_mat = new THREE.MeshBasicMaterial({
-        side: THREE.BackSide,
-        map: texture,
-        fog: true,
-      });
-      this.skySphere = new THREE.Mesh(skySphere_geom, skySphere_mat);
-       this.skySphere.material.map.needsUpdate = true;
-      return this.skySphere;
-    };
-
-  }
-
-
+  this.createSkySphere = function (texture) {
+    texture = new THREE.CanvasTexture(texture);
+    const skySphere_geom = new THREE.SphereGeometry(this.worldSize, 100, 100);
+    const skySphere_mat = new THREE.MeshBasicMaterial({
+      side: THREE.BackSide,
+      map: texture,
+      fog: true,
+    });
+    this.skySphere = new THREE.Mesh(skySphere_geom, skySphere_mat);
+    this.skySphere.material.map.needsUpdate = true;
+    return this.skySphere;
+  };
+};
 
 class App {
   constructor() {
@@ -265,12 +260,13 @@ class App {
   }
 
   backMusicLoader() {
-this.listener1 = new THREE.AudioListener();
-this.camera.add(this.listener1);
+    this.listener1 = new THREE.AudioListener();
+    this.camera.add(this.listener1);
     this.backSound = new THREE.Audio(this.listener1);
     this.scene.add(this.backSound);
     const audioLoader = new THREE.AudioLoader();
-    const musicfile = '../../assets/sounds/Else-Paris-128k.ogg';
+    const musicfile =
+      'https://worning77.github.io/ZLT-WebXR-Game/assets/sounds/Else-Paris-128k.ogg';
 
     const self = this;
     audioLoader.load(musicfile, function (buffer) {
@@ -286,7 +282,8 @@ this.camera.add(this.listener1);
     this.camera.add(this.listener2);
     this.completed = new THREE.Audio(this.listener2);
     const audioLoader = new THREE.AudioLoader();
-    const musicfile = '../../assets/sounds/completed.mp3';
+    const musicfile =
+      'https://worning77.github.io/ZLT-WebXR-Game/assets/sounds/completed.mp3';
 
     const self = this;
     audioLoader.load(musicfile, function (buffer) {
@@ -440,7 +437,6 @@ this.camera.add(this.listener1);
   }
 
   menue() {
-
     this.radius = 0.08;
 
     //init ground
@@ -1167,6 +1163,7 @@ this.camera.add(this.listener1);
       const xAxisIndex = this.rightGamepad.xr_standard_thumbstick.xAxis;
       let rotate = gamepad.axes[xAxisIndex].toFixed(2);
 
+      if (rotate === 0) return;
       if (rotate < 0) {
         this._leftTurn.forEach((fn) => {
           fn();

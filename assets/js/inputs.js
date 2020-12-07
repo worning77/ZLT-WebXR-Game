@@ -284,7 +284,7 @@ class Inputs {
         shadowZY.children[0].remove(shadowZY.children[0].children[1]);
       }
     }
-
+    //out of plane
     if (
       Math.abs(pointCurent2.x) > 3 ||
       Math.abs(pointCurent2.z) > 3 ||
@@ -293,10 +293,13 @@ class Inputs {
       app.LBlockS.children[0].children[0].material.color.setHex(
         this.wrongColor
       );
+      app.LBlockS.children[0].children[1].material.color.setHex(
+        this.wrongColor
+      );
     }
 
     if (
-      app.LBlockS.children[0].children[1].material.color.getHex() ===
+      app.LBlockS.children[0].children[0].material.color.getHex() ===
       this.wrongColor
     ) {
       TWEEN.add(this.flash);
@@ -354,7 +357,7 @@ class Inputs {
     }
 
     if (
-      app.TBlockS.children[0].children[1].material.color.getHex() ==
+      app.TBlockS.children[0].children[0].material.color.getHex() ==
       this.wrongColor
     ) {
       TWEEN.add(this.flash);
@@ -429,15 +432,21 @@ class Inputs {
       app.ZBlockS.children[0].children[0].material.color.setHex(
         this.wrongColor
       );
+      app.ZBlockS.children[0].children[1].material.color.setHex(
+        this.wrongColor
+      );
     }
     if (pointXY1M.y == pointXY2M.y && pointCurent1.z > 2) {
       app.ZBlockS.children[0].children[0].material.color.setHex(
         this.wrongColor
       );
+      app.ZBlockS.children[0].children[1].material.color.setHex(
+        this.wrongColor
+      );
     }
 
     if (
-      app.ZBlockS.children[0].children[1].material.color.getHex() ==
+      app.ZBlockS.children[0].children[0].material.color.getHex() ==
       this.wrongColor
     ) {
       TWEEN.add(this.flash);
@@ -674,11 +683,7 @@ class Inputs {
 
     const intersects = app.raycaster.intersectObjects(app.allObjects, true);
 
-    if (
-      app.LSelected &&
-      this.isShiftDown === false
-
-    ) {
+    if (app.LSelected && this.isShiftDown === false) {
       app.LBlockC = new LBlock().addToSpace();
       app.LBlockC.setRotationFromQuaternion(app.LcurrentRotation);
       app.LBlockC.updateMatrixWorld();
@@ -1177,12 +1182,18 @@ class Inputs {
     }
   }
 
-  _leftTurn(){
-    if(app.LSelected){
+  _leftTurn() {
+    if (app.LSelected) {
+      app.LBlockS.children[0].children[0].material.needsUpdate = true;
+      app.LBlockS.children[0].children[1].material.needsUpdate = true;
       app.LBlockS.children[0].children[0].material.color.setHex(
         this.LrightColor
       );
       app.LBlockS.children[0].children[0].material.opacity = 0.4;
+      app.LBlockS.children[0].children[1].material.color.setHex(
+        this.LrightColor
+      );
+      app.LBlockS.children[0].children[1].material.opacity = 0.4;
       app.LBlockS.rotateY(-Math.PI / 2);
       app.LBlockS.updateMatrixWorld();
       this.checkShadowL(app.LShadowXY, app.LShadowZY);
@@ -1194,15 +1205,25 @@ class Inputs {
           continue;
         }
         if (this.checkCollision(app.LBlockS.children[0], app.allObjects[i])) {
-          app.LBlockS.children[0].material.color.setHex(this.wrongColor);
+          app.LBlockS.children[0].children[0].material.color.setHex(
+            this.wrongColor
+          );
+          app.LBlockS.children[0].children[1].material.color.setHex(
+            this.wrongColor
+          );
         }
       }
-
-    } else if(app.TSelected){
+    } else if (app.TSelected) {
+      app.TBlockS.children[0].children[0].material.needsUpdate = true;
+      app.TBlockS.children[0].children[1].material.needsUpdate = true;
       app.TBlockS.children[0].children[0].material.color.setHex(
         this.TrightColor
       );
       app.TBlockS.children[0].children[0].material.opacity = 0.4;
+      app.TBlockS.children[0].children[1].material.color.setHex(
+        this.TrightColor
+      );
+      app.TBlockS.children[0].children[1].material.opacity = 0.4;
       app.TBlockS.rotateZ(-Math.PI / 2);
       app.TShadowXY.rotateZ(-Math.PI / 2);
       app.TBlockS.updateMatrixWorld();
@@ -1217,15 +1238,25 @@ class Inputs {
           continue;
         }
         if (this.checkCollision(app.TBlockS.children[0], app.allObjects[i])) {
-          app.TBlockS.children[0].material.color.setHex(this.wrongColor);
+          app.TBlockS.children[0].children[0].material.color.setHex(
+            this.wrongColor
+          );
+          app.TBlockS.children[0].children[1].material.color.setHex(
+            this.wrongColor
+          );
         }
       }
-
-    } else if(app.ZSelected){
+    } else if (app.ZSelected) {
+      app.ZBlockS.children[0].children[0].material.needsUpdate = true;
+      app.ZBlockS.children[0].children[1].material.needsUpdate = true;
       app.ZBlockS.children[0].children[0].material.color.setHex(
         this.ZrightColor
       );
       app.ZBlockS.children[0].children[0].material.opacity = 0.4;
+      app.ZBlockS.children[0].children[1].material.color.setHex(
+        this.ZrightColor
+      );
+      app.ZBlockS.children[0].children[1].material.opacity = 0.4;
       app.ZBlockS.rotateX(-Math.PI / 2);
       app.ZShadowZY.rotateX(-Math.PI / 2);
       app.ZBlockS.updateMatrixWorld();
@@ -1239,20 +1270,28 @@ class Inputs {
           continue;
         }
         if (this.checkCollision(app.ZBlockS.children[0], app.allObjects[i])) {
-          app.ZBlockS.children[0].material.color.setHex(this.wrongColor);
+          app.ZBlockS.children[0].children[0].material.color.setHex(
+            this.wrongColor
+          );
+          app.ZBlockS.children[0].children[1].material.color.setHex(
+            this.wrongColor
+          );
         }
       }
-
-
-    }
-    else return
+    } else return;
   }
-  _rightTurn(){
+  _rightTurn() {
     if (app.LSelected) {
+      app.LBlockS.children[0].children[0].material.needsUpdate = true;
+      app.LBlockS.children[0].children[1].material.needsUpdate = true;
       app.LBlockS.children[0].children[0].material.color.setHex(
         this.LrightColor
       );
       app.LBlockS.children[0].children[0].material.opacity = 0.4;
+      app.LBlockS.children[0].children[1].material.color.setHex(
+        this.LrightColor
+      );
+      app.LBlockS.children[0].children[1].material.opacity = 0.4;
       app.LBlockS.rotateY(Math.PI / 2);
       app.LBlockS.updateMatrixWorld();
       this.checkShadowL(app.LShadowXY, app.LShadowZY);
@@ -1260,18 +1299,28 @@ class Inputs {
       //check valid or not, change color
       for (let i = 0; i < app.allObjects.length; i++) {
         if (app.allObjects[i].name == 'plane') {
-          //dont test against the plane, other blocks are object3D
           continue;
         }
         if (this.checkCollision(app.LBlockS.children[0], app.allObjects[i])) {
-          app.LBlockS.children[0].material.color.setHex(this.wrongColor);
+          app.LBlockS.children[0].children[0].material.color.setHex(
+            this.wrongColor
+          );
+          app.LBlockS.children[0].children[1].material.color.setHex(
+            this.wrongColor
+          );
         }
       }
-    } else if(app.TSelected) {
+    } else if (app.TSelected) {
+      app.TBlockS.children[0].children[0].material.needsUpdate = true;
+      app.TBlockS.children[0].children[1].material.needsUpdate = true;
       app.TBlockS.children[0].children[0].material.color.setHex(
         this.TrightColor
       );
       app.TBlockS.children[0].children[0].material.opacity = 0.4;
+      app.TBlockS.children[0].children[1].material.color.setHex(
+        this.TrightColor
+      );
+      app.TBlockS.children[0].children[1].material.opacity = 0.4;
       app.TBlockS.rotateZ(Math.PI / 2);
       app.TShadowXY.rotateZ(Math.PI / 2);
       app.TBlockS.updateMatrixWorld();
@@ -1286,14 +1335,25 @@ class Inputs {
           continue;
         }
         if (this.checkCollision(app.TBlockS.children[0], app.allObjects[i])) {
-          app.TBlockS.children[0].material.color.setHex(this.wrongColor);
+          app.TBlockS.children[0].children[0].material.color.setHex(
+            this.wrongColor
+          );
+          app.TBlockS.children[0].children[1].material.color.setHex(
+            this.wrongColor
+          );
         }
       }
-    } else if(app.ZSelected) {
+    } else if (app.ZSelected) {
+      app.ZBlockS.children[0].children[0].material.needsUpdate = true;
+      app.ZBlockS.children[0].children[1].material.needsUpdate = true;
       app.ZBlockS.children[0].children[0].material.color.setHex(
         this.ZrightColor
       );
       app.ZBlockS.children[0].children[0].material.opacity = 0.4;
+      app.ZBlockS.children[0].children[1].material.color.setHex(
+        this.ZrightColor
+      );
+      app.ZBlockS.children[0].children[1].material.opacity = 0.4;
       app.ZBlockS.rotateX(Math.PI / 2);
       app.ZShadowZY.rotateX(Math.PI / 2);
       app.ZBlockS.updateMatrixWorld();
@@ -1307,14 +1367,16 @@ class Inputs {
           continue;
         }
         if (this.checkCollision(app.ZBlockS.children[0], app.allObjects[i])) {
-          app.ZBlockS.children[0].material.color.setHex(this.wrongColor);
+          app.ZBlockS.children[0].children[0].material.color.setHex(
+            this.wrongColor
+          );
+          app.ZBlockS.children[0].children[1].material.color.setHex(
+            this.wrongColor
+          );
         }
       }
     } else return;
-
   }
-
-
 
   _onKeyDownL(event) {
     if (app.LSelected) {
@@ -1324,6 +1386,10 @@ class Inputs {
         this.LrightColor
       );
       app.LBlockS.children[0].children[0].material.opacity = 0.4;
+      app.LBlockS.children[0].children[1].material.color.setHex(
+        this.LrightColor
+      );
+      app.LBlockS.children[0].children[1].material.opacity = 0.4;
       switch (event.key) {
         case 'ArrowLeft':
           app.LBlockS.rotateY(-Math.PI / 2);
@@ -1339,7 +1405,12 @@ class Inputs {
             if (
               this.checkCollision(app.LBlockS.children[0], app.allObjects[i])
             ) {
-              app.LBlockS.children[0].children[0].material.color.setHex(this.wrongColor);
+              app.LBlockS.children[0].children[0].material.color.setHex(
+                this.wrongColor
+              );
+              app.LBlockS.children[0].children[1].material.color.setHex(
+                this.wrongColor
+              );
             }
           }
 
@@ -1356,7 +1427,12 @@ class Inputs {
             if (
               this.checkCollision(app.LBlockS.children[0], app.allObjects[i])
             ) {
-              app.LBlockS.children[0].children[0].material.color.setHex(this.wrongColor);
+              app.LBlockS.children[0].children[0].material.color.setHex(
+                this.wrongColor
+              );
+              app.LBlockS.children[0].children[1].material.color.setHex(
+                this.wrongColor
+              );
             }
           }
           app.LBlockS.getWorldQuaternion(app.LcurrentRotation);
@@ -1367,10 +1443,16 @@ class Inputs {
 
   _onKeyDownT(event) {
     if (app.TSelected) {
+      app.TBlockS.children[0].children[0].material.needsUpdate = true;
+      app.TBlockS.children[0].children[1].material.needsUpdate = true;
       app.TBlockS.children[0].children[0].material.color.setHex(
         this.TrightColor
       );
       app.TBlockS.children[0].children[0].material.opacity = 0.4;
+      app.TBlockS.children[0].children[1].material.color.setHex(
+        this.TrightColor
+      );
+      app.TBlockS.children[0].children[1].material.opacity = 0.4;
 
       switch (event.key) {
         case 'ArrowLeft':
@@ -1390,7 +1472,12 @@ class Inputs {
             if (
               this.checkCollision(app.TBlockS.children[0], app.allObjects[i])
             ) {
-              app.TBlockS.children[0].children[0].material.color.setHex(this.wrongColor);
+              app.TBlockS.children[0].children[0].material.color.setHex(
+                this.wrongColor
+              );
+              app.TBlockS.children[0].children[1].material.color.setHex(
+                this.wrongColor
+              );
             }
           }
           break;
@@ -1410,7 +1497,12 @@ class Inputs {
             if (
               this.checkCollision(app.TBlockS.children[0], app.allObjects[i])
             ) {
-              app.TBlockS.children[0].children[0].material.color.setHex(this.wrongColor);
+              app.TBlockS.children[0].children[0].material.color.setHex(
+                this.wrongColor
+              );
+              app.TBlockS.children[0].children[1].material.color.setHex(
+                this.wrongColor
+              );
             }
           }
           break;
@@ -1420,10 +1512,16 @@ class Inputs {
 
   _onKeyDownZ(event) {
     if (app.ZSelected) {
+      app.ZBlockS.children[0].children[0].material.needsUpdate = true;
+      app.ZBlockS.children[0].children[1].material.needsUpdate = true;
       app.ZBlockS.children[0].children[0].material.color.setHex(
         this.ZrightColor
       );
       app.ZBlockS.children[0].children[0].material.opacity = 0.4;
+      app.ZBlockS.children[0].children[1].material.color.setHex(
+        this.ZrightColor
+      );
+      app.ZBlockS.children[0].children[1].material.opacity = 0.4;
 
       switch (event.key) {
         case 'ArrowLeft':
@@ -1442,7 +1540,12 @@ class Inputs {
             if (
               this.checkCollision(app.ZBlockS.children[0], app.allObjects[i])
             ) {
-              app.ZBlockS.children[0].children[0].material.color.setHex(this.wrongColor);
+              app.ZBlockS.children[0].children[0].material.color.setHex(
+                this.wrongColor
+              );
+              app.ZBlockS.children[0].children[1].material.color.setHex(
+                this.wrongColor
+              );
             }
           }
           break;
@@ -1461,7 +1564,12 @@ class Inputs {
             if (
               this.checkCollision(app.ZBlockS.children[0], app.allObjects[i])
             ) {
-              app.ZBlockS.children[0].children[0].material.color.setHex(this.wrongColor);
+              app.ZBlockS.children[0].children[0].material.color.setHex(
+                this.wrongColor
+              );
+              app.ZBlockS.children[0].children[1].material.color.setHex(
+                this.wrongColor
+              );
             }
           }
           break;
@@ -1487,7 +1595,6 @@ class Inputs {
           controller.userData.squeezePressed &&
           intersect.object.name !== 'plane'
         ) {
-
           for (let i = 1; i < app.allObjects.length; i++) {
             if (
               app.allObjects[i].name !== 'empty' &&
@@ -1540,9 +1647,7 @@ class Inputs {
 
   _onMoveDelete(app, controller) {
     if (app.level === 2) {
-      const intersects = app.raycaster.intersectObjects(
-        app.gameOverCubes,
-      );
+      const intersects = app.raycaster.intersectObjects(app.gameOverCubes);
       if (intersects.length > 0) {
         const intersect = intersects[0];
         console.log(intersect.object);
