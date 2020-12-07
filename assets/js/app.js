@@ -1,5 +1,6 @@
 import * as THREE from './libs/three/three.module.js';
 
+
 import { OrbitControls } from './libs/three/jsm/OrbitControls.js';
 import { XRControllerModelFactory } from './libs/three/jsm/XRControllerModelFactory.js';
 import { CanvasUI } from './libs/CanvasUI.js';
@@ -256,7 +257,6 @@ class App {
     this.renderer.setAnimationLoop(this.render.bind(this));
   }
 
-
   resize() {
     //resize function
     this.camera.aspect = window.innerWidth / window.innerHeight;
@@ -264,31 +264,36 @@ class App {
     this.renderer.setSize(window.innerWidth, window.innerHeight);
   }
 
-  backMusicLoader(){
-    this.listener = new THREE.AudioListener();
-    this.camera.add(this.listener);
-
-    this.backSound = new THREE.Audio(this.listener);
+  backMusicLoader() {
+this.listener1 = new THREE.AudioListener();
+this.camera.add(this.listener1);
+    this.backSound = new THREE.Audio(this.listener1);
     this.scene.add(this.backSound);
     const audioLoader = new THREE.AudioLoader();
+    const musicfile = '../../assets/sounds/Else-Paris-128k.ogg';
 
-    audioLoader.load(
-      '../sounds/Else-Paris-128k.ogg',
-      function (buffer) {
-        this.backSound.setBuffer(buffer);
-        this.backSound.setLoop(true);
-        this.backSound.setVolume(0.5);
-        this.backSound.play();
-      },
-      function (xhr) {
-        console.log((xhr.loaded / xhr.total) * 100 + '% loaded');
-      },
-      function (err) {
-        console.log('An error happened');
-      }
-    );
+    const self = this;
+    audioLoader.load(musicfile, function (buffer) {
+      self.backSound.setBuffer(buffer);
+      self.backSound.setLoop(true);
+      self.backSound.setVolume(0.2);
+      self.backSound.play();
+    });
+  }
 
+  levelUPSound() {
+    this.listener2 = new THREE.AudioListener();
+    this.camera.add(this.listener2);
+    this.completed = new THREE.Audio(this.listener2);
+    const audioLoader = new THREE.AudioLoader();
+    const musicfile = '../../assets/sounds/completed.mp3';
 
+    const self = this;
+    audioLoader.load(musicfile, function (buffer) {
+      self.completed.setBuffer(buffer);
+      self.completed.setVolume(0.4);
+      self.completed.play();
+    });
   }
 
   textLoader() {
@@ -318,8 +323,8 @@ class App {
       const text4 = new THREE.TextGeometry(word4, typoProperties1);
       //text4.computeBoundingBox();
       const material = new THREE.MeshPhongMaterial({ color: 0xaa5b71 });
-       const material2 = new THREE.MeshPhongMaterial({ color: 0xb7d28d });
-        const material3 = new THREE.MeshPhongMaterial({ color: 0xe29e4b });
+      const material2 = new THREE.MeshPhongMaterial({ color: 0xb7d28d });
+      const material3 = new THREE.MeshPhongMaterial({ color: 0xe29e4b });
       const material4 = new THREE.MeshPhongMaterial({ color: 0xf55066 });
       const mesh1 = new THREE.Mesh(text1, material);
       const mesh2 = new THREE.Mesh(text2, material2);
@@ -405,8 +410,8 @@ class App {
     this.ShadowZY8 = new Levels().level8ZY();
     this.ShadowXY9 = new Levels().level9XY();
     this.ShadowZY9 = new Levels().level9ZY();
-  this.ShadowXY10 = new Levels().level10XY();
-  this.ShadowZY10 = new Levels().level10ZY();
+    this.ShadowXY10 = new Levels().level10XY();
+    this.ShadowZY10 = new Levels().level10ZY();
 
     this.levelShdaowsXY.push(
       this.ShadowXY1,
@@ -418,8 +423,7 @@ class App {
       this.ShadowXY7,
       this.ShadowXY8,
       this.ShadowXY9,
-      this.ShadowXY10,
-
+      this.ShadowXY10
     );
     this.levelShdaowsZY.push(
       this.ShadowZY1,
@@ -436,11 +440,16 @@ class App {
   }
 
   menue() {
+
     this.radius = 0.08;
 
     //init ground
     const groundGeo = new THREE.CylinderBufferGeometry(7, 7, 0.4, 100);
-    const groundMat = new THREE.MeshLambertMaterial({ color: 0xf1ccb8, opacity:0.5, transparent: true });
+    const groundMat = new THREE.MeshLambertMaterial({
+      color: 0xf1ccb8,
+      opacity: 0.5,
+      transparent: true,
+    });
     const outBoundGeo = new THREE.TorusGeometry(7.2, 0.2, 16, 100);
     const outMat = new THREE.MeshStandardMaterial({ color: 0x80ffff });
     this.ground = new THREE.Mesh(groundGeo, groundMat);
@@ -449,7 +458,6 @@ class App {
     this.outBound.rotateX(Math.PI / 2);
     this.Ground = new THREE.Group();
     this.Ground.add(this.ground, this.outBound);
-
 
     this.Ground.position.y = -1.5;
     this.scene.add(this.Ground);
@@ -490,7 +498,13 @@ class App {
           borderRadius: 20,
         },
       };
-      const uiWeb = new CanvasUI({ body: 'Hey, welcome to ZLT! Let’s see how good are you at building blocks :) Controls: 1.click block in each axis to activate element. 2.move mouse and click to place block on the floor. 3.left and right arrow to rotate element. 4.hold shift and click a placed block to remove.' }, configWeb);
+      const uiWeb = new CanvasUI(
+        {
+          body:
+            'Hey, welcome to ZLT! Let’s see how good are you at building blocks :) Controls: 1.click block in each axis to activate element. 2.move mouse and click to place block on the floor. 3.left and right arrow to rotate element. 4.hold shift and click a placed block to remove.',
+        },
+        configWeb
+      );
       uiWeb.mesh.position.set(-3, 2, 0);
       uiWeb.mesh.rotateY(Math.PI / 2);
       return uiWeb.mesh;
@@ -528,8 +542,8 @@ class App {
     this.IntroSmall = CreatUIVR();
     this.IntroSmall.lookAt(this.camera.position);
 
-     this.boundary = [];
-     this.boundary.push(this.Ground);
+    this.boundary = [];
+    this.boundary.push(this.Ground);
   }
 
   removeMenu() {
@@ -706,9 +720,9 @@ class App {
     if (this.level === 0) {
       this.planeXYG.add(this.levelShdaowsXY[0]);
       this.planeZYG.add(this.levelShdaowsZY[0]);
-    } else if (this.level !== this.levelShdaowsXY.length -1) {
+    } else if (this.level !== this.levelShdaowsXY.length - 1) {
       if (this.levelPassed) {
-        console.log('pass');
+        this.levelUPSound();
         //reset coordinate
         this.resetL();
         this.resetT();
@@ -773,7 +787,7 @@ class App {
         });
         //}
       }
-    } else if (this.level === this.levelShdaowsXY.length - 1 ) {
+    } else if (this.level === this.levelShdaowsXY.length - 1) {
       //reset coordinate
       this.resetL();
       this.resetT();
@@ -1221,61 +1235,77 @@ class App {
   }
 
   _addEventListeners() {
-    document.addEventListener('mousemove', (event) => {
-      event.preventDefault();
-      if (!app.renderer.xr.isPresenting) {
-        if (this.level !== 9) {
+    document.addEventListener(
+      'mousemove',
+      (event) => {
+        event.preventDefault();
+        if (!app.renderer.xr.isPresenting) {
+          if (this.level !== 9) {
+            this.mouse.set(
+              (event.clientX / window.innerWidth) * 2 - 1,
+              -(event.clientY / window.innerHeight) * 2 + 1
+            );
+            this.raycaster.setFromCamera(this.mouse, this.camera);
+            if (this.menuShow) {
+              this.StartMove();
+            } else {
+              this._onMouseMoves.forEach((fn) => {
+                fn();
+              });
+            }
+          } else {
+            this.onMouseMoveF(event);
+          }
+        }
+      },
+      false
+    );
+
+    document.addEventListener(
+      'mousedown',
+      (event) => {
+        event.preventDefault();
+        if (!app.renderer.xr.isPresenting) {
           this.mouse.set(
             (event.clientX / window.innerWidth) * 2 - 1,
             -(event.clientY / window.innerHeight) * 2 + 1
           );
           this.raycaster.setFromCamera(this.mouse, this.camera);
+          TWEEN.removeAll();
           if (this.menuShow) {
-            this.StartMove();
+            this.StartClick();
           } else {
-            this._onMouseMoves.forEach((fn) => {
+            this.initBlocks();
+            this._onMouseDowns.forEach((fn) => {
               fn();
             });
+            this.levelMove();
           }
-        } else {
-          this.onMouseMoveF(event);
         }
-      }
-    }, false);
+      },
+      false
+    );
 
-    document.addEventListener('mousedown', (event) => {
-      event.preventDefault();
-      if (!app.renderer.xr.isPresenting) {
-        this.mouse.set(
-          (event.clientX / window.innerWidth) * 2 - 1,
-          -(event.clientY / window.innerHeight) * 2 + 1
-        );
-        this.raycaster.setFromCamera(this.mouse, this.camera);
-        TWEEN.removeAll();
-        if (this.menuShow) {
-          this.StartClick();
-        } else {
-          this.initBlocks();
-          this._onMouseDowns.forEach((fn) => {
-            fn();
-          });
-          this.levelMove();
-        }
-      }
-    }, false);
-
-    document.addEventListener('keydown', (event) => {
-      event.preventDefault();
-      this._onKeyDowns.forEach((fn) => {
-        fn(event);
-      });
-    }, false);
-    document.addEventListener('keyup', (event) => {
-      event.preventDefault();
-      this._onKeyUp.forEach((fn) => {
-        fn(event);
-      });
-    }, false);
+    document.addEventListener(
+      'keydown',
+      (event) => {
+        event.preventDefault();
+        this._onKeyDowns.forEach((fn) => {
+          fn(event);
+        });
+      },
+      false
+    );
+    document.addEventListener(
+      'keyup',
+      (event) => {
+        event.preventDefault();
+        this._onKeyUp.forEach((fn) => {
+          fn(event);
+        });
+      },
+      false
+    );
   }
 
   coordinate(coordX, coordY) {
