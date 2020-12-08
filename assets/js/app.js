@@ -363,7 +363,7 @@ class App {
     //final words
     const loader2 = new THREE.FontLoader();
     const createTypo2 = (font) => {
-      const word = 'Congraduation';
+      const word = 'congratulations';
       const typoProperties2 = {
         font: font,
         size: 120,
