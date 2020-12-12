@@ -53,7 +53,7 @@ class Planes {
         opacity: 1,
       })
     );
-    planeXZ.name = "plane";
+    planeXZ.name = 'plane';
     this.planeGroup.add(planeXZ, gridHelperXZ);
     return this.planeGroup;
   }
@@ -63,7 +63,13 @@ class Planes {
     this.spotLightT = this.spotLight.clone();
     this.spotLightZ = this.spotLight.clone();
 
-    const lightGeo = new THREE.CylinderBufferGeometry(0.12, 0.25, 6.5, 32, true);
+    const lightGeo = new THREE.CylinderBufferGeometry(
+      0.12,
+      0.25,
+      6.5,
+      32,
+      true
+    );
 
     const Lmaterial = new SpotLightVolumetricMaterial(
       new THREE.Color(0x00a9fe)
@@ -87,20 +93,19 @@ class Planes {
     lightZ.position.set(7, 0, 0);
     lightZ.target.position.set(7.3, 0, 0);
 
-
-    const coneL = new THREE.Mesh(lightGeo,Lmaterial);
+    const coneL = new THREE.Mesh(lightGeo, Lmaterial);
     coneL.translateY(-2.2);
     lightL.add(coneL);
 
     const coneT = new THREE.Mesh(lightGeo, Tmaterial);
-    coneT.rotateX(Math.PI/2)
-     coneT.scale.set(1, 1.076, 1);
+    coneT.rotateX(Math.PI / 2);
+    coneT.scale.set(1, 1.076, 1);
     coneT.translateY(-3.5);
     lightT.add(coneT);
 
     const coneZ = new THREE.Mesh(lightGeo, Zmaterial);
     coneZ.rotateZ(-Math.PI / 2);
-    coneZ.scale.set(1,1.076,1)
+    coneZ.scale.set(1, 1.076, 1);
     coneZ.translateY(-3.5);
     lightZ.add(coneZ);
 
@@ -151,14 +156,11 @@ class Planes {
     this.alixZ.position.set(0, 0, 3.5);
     this.center = new THREE.Mesh(centerGeometry, centerMaterial);
 
-
     this.coorGroup = new THREE.Object3D();
     this.coorGroup.add(this.center);
     this.coorGroup.add(this.spotLightL, this.spotLightT, this.spotLightZ);
     this.coorGroup.add(this.alixX, this.alixY, this.alixZ);
     return this.coorGroup;
   }
-
-
 }
 export { Planes };

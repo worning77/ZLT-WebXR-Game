@@ -99,14 +99,14 @@ class LBlock {
     this.lBlockPart1.position.set(center1.x, center1.y - 1, center1.z);
     this.lBlockPart1.updateWorldMatrix;
     this.lBlockPart1.geometry.attributes.position.needsUpdate = true;
-    //console.log(this.lBlockPart1.position);
+    // console.log(this.lBlockPart1.position);
 
     const center2 = new THREE.Vector3();
     this.lBlockPart2.geometry.boundingBox.getCenter(center2);
     this.lBlockPart2.position.set(center2.x - 1, center2.y, center2.z);
     this.lBlockPart2.updateWorldMatrix;
     this.lBlockPart2.geometry.attributes.position.needsUpdate = true;
-    //console.log(this.lBlockPart2.position);
+    // console.log(this.lBlockPart2.position);
 
     blockLineGeometry.computeBoundingBox();
     this.lBlockLine = new THREE.LineSegments(

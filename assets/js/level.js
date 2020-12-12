@@ -339,7 +339,6 @@ class Levels {
     return group;
   }
 
-
   readGridXY(level) {
     const geo = this.geometry.clone();
     const shadowPiece = new THREE.Mesh(geo, this.shadowMaterial);
@@ -385,7 +384,7 @@ class Levels {
           this.centerZY.add(new THREE.Vector3(-0.04, -0.5, 0.5));
 
           this.shadowPiece.position.copy(this.centerZY);
-          //console.log(this.shadowPiece);
+          // console.log(this.shadowPiece);
           this.shadowPiece.rotateY(Math.PI / 2);
           // this.shadowPiece.geometry.attributes.position.needsUpdate = true;
           this.shadowPiece.updateWorldMatrix;

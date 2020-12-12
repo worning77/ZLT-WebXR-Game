@@ -27,25 +27,25 @@ import { Levels } from './level.js';
 
 // import { LBlock, TBlock, ZBlock } from './shapes/'
 
-const SkyTexture = function (width, height) {
-  this.canvas;
-  this.ctx;
-  this.width = width;
-  this.height = height;
+class SkyTexture {
+  constructor(width, height) {
+    this.canvas;
+    this.ctx;
+    this.width = width;
+    this.height = height;
 
-  this.topColor = 'rgb(135,196,196)';
-  this.bottomColor = 'rgb(255,152,158)';
+    this.topColor = 'rgb(135,196,196)';
+    this.bottomColor = 'rgb(255,152,158)';
 
-  this.init = function () {
     this.canvas = document.createElement('canvas');
     this.canvas.id = 'skyTexture';
     this.canvas.width = this.width;
     this.canvas.height = this.height;
     this.ctx = this.canvas.getContext('2d');
     //document.body.appendChild(this.canvas);     // don't need to do this!
-  };
+  }
 
-  this.render = function () {
+  render() {
     // Create gradient
     const grd = this.ctx.createLinearGradient(0, 0, 0, this.height);
     grd.addColorStop(0.8, this.topColor);
@@ -54,24 +54,26 @@ const SkyTexture = function (width, height) {
     // Fill with gradient
     this.ctx.fillStyle = grd;
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-  };
-};
+  }
+}
 
-const background = function () {
-  this.worldSize = 30;
-  this.createSkySphere = function (texture) {
-    texture = new THREE.CanvasTexture(texture);
-    const skySphere_geom = new THREE.SphereGeometry(this.worldSize, 100, 100);
-    const skySphere_mat = new THREE.MeshBasicMaterial({
-      side: THREE.BackSide,
-      map: texture,
-      fog: true,
-    });
-    this.skySphere = new THREE.Mesh(skySphere_geom, skySphere_mat);
-    this.skySphere.material.map.needsUpdate = true;
-    return this.skySphere;
-  };
-};
+class background {
+  constructor() {
+    this.worldSize = 30;
+    this.createSkySphere = function (texture) {
+      texture = new THREE.CanvasTexture(texture);
+      const skySphere_geom = new THREE.SphereGeometry(this.worldSize, 100, 100);
+      const skySphere_mat = new THREE.MeshBasicMaterial({
+        side: THREE.BackSide,
+        map: texture,
+        fog: true,
+      });
+      this.skySphere = new THREE.Mesh(skySphere_geom, skySphere_mat);
+      this.skySphere.material.map.needsUpdate = true;
+      return this.skySphere;
+    };
+  }
+}
 
 class App {
   constructor() {
@@ -97,7 +99,6 @@ class App {
     this.scene = new THREE.Scene();
 
     this.skyTexture = new SkyTexture(1024, 1024);
-    this.skyTexture.init();
     this.skyTexture.render();
     this.background = new background();
     this.sky = this.background.createSkySphere(this.skyTexture.ctx.canvas);
@@ -757,7 +758,7 @@ class App {
           .color;
 
         this.planeXYG.add(this.levelShdaowsXY[this.level]);
-        //console.log(this.levelShdaowsXY[this.level]);
+        // console.log(this.levelShdaowsXY[this.level]);
         this.planeZYG.add(this.levelShdaowsZY[this.level]);
 
         const tweenAppear = new TWEEN.Tween(currentO)
@@ -972,7 +973,7 @@ class App {
     }
     function onDisconnected() {
       const index = this.userData.index;
-      //console.log(`Disconnected controller ${index}`);
+      // console.log(`Disconnected controller ${index}`);
       if (self.controllers) {
         const obj = index == 0 ? self.controllers.right : self.controllers.left;
 
@@ -1358,7 +1359,7 @@ class App {
       .onUpdate()
       .start();
     const currentEmis = this.LBLOCK.children[0].children[0].material;
-    //console.log(this.LBLOCK.children[0].children[0].material);
+    // console.log(this.LBLOCK.children[0].children[0].material);
     const defaultEmis = currentEmis.emissive.set(0x000000);
     this.LMoved = false;
   }
