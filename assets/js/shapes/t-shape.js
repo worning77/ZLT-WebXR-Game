@@ -101,7 +101,7 @@ class TBlock {
     this.tBlockPart1.rotateY(Math.PI / 2);
     this.tBlockPart1.updateWorldMatrix;
     this.tBlockPart1.geometry.attributes.position.needsUpdate = true;
-    //console.log(this.lBlockPart1.position);
+    // console.log(this.lBlockPart1.position);
 
     const center2 = new THREE.Vector3();
     this.tBlockPart2.geometry.boundingBox.getCenter(center2);
@@ -110,7 +110,7 @@ class TBlock {
     this.tBlockPart2.rotateY(Math.PI / 2);
     this.tBlockPart2.updateWorldMatrix;
     this.tBlockPart2.geometry.attributes.position.needsUpdate = true;
-    //console.log(this.lBlockPart2.position);
+    // console.log(this.lBlockPart2.position);
 
     blockLineGeometry.computeBoundingBox();
     this.tBlockLine = new THREE.LineSegments(
@@ -181,7 +181,7 @@ class TBlock {
     this.tBlockPart1.rotateY(Math.PI / 2);
     this.tBlockPart1.updateWorldMatrix;
     this.tBlockPart1.geometry.attributes.position.needsUpdate = true;
-    //console.log(this.lBlockPart1.position);
+    // console.log(this.lBlockPart1.position);
 
     const center2 = new THREE.Vector3();
     this.tBlockPart2.geometry.boundingBox.getCenter(center2);

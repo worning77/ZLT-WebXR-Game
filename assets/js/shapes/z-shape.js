@@ -180,7 +180,7 @@ class ZBlock {
 
     const center1 = new THREE.Vector3();
     this.zBlockPart1.geometry.boundingBox.getCenter(center1);
-    //console.log(center1);
+    // console.log(center1);
     this.zBlockPart1.position.set(center1.x, center1.y + 0.5, center1.z);
     this.zBlockPart1.updateWorldMatrix;
     this.zBlockPart1.geometry.attributes.position.needsUpdate = true;

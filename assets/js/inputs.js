@@ -140,13 +140,13 @@ class Inputs {
 
       if (ShadowXY.children[i].material.opacity === 1) {
         n++;
-        console.log(n, ShadowXY.children.length, array.length);
+        // console.log(n, ShadowXY.children.length, array.length);
         if (
           n === ShadowXY.children.length &&
           ShadowXY.children.length === array.length
         ) {
           app.XYmatched = true;
-          console.log(app.XYmatched);
+          // console.log(app.XYmatched);
         }
       }
     }
@@ -169,13 +169,13 @@ class Inputs {
       }
       if (ShadowZY.children[i].material.opacity === 1) {
         n++;
-        console.log(n, ShadowZY.children.length, array.length);
+        // console.log(n, ShadowZY.children.length, array.length);
         if (
           n === ShadowZY.children.length &&
           ShadowZY.children.length === array.length
         ) {
           app.ZYmatched = true;
-          console.log(app.ZYmatched);
+          // console.log(app.ZYmatched);
         }
       }
     }
@@ -183,7 +183,7 @@ class Inputs {
 
   cleanPoints(array) {
     let changedReceived = [...array];
-    console.log(changedReceived);
+    // console.log(changedReceived);
     let renewed = [];
     for (let i = 0; i < changedReceived.length; i++) {
       if (changedReceived[i] !== '[]') {
@@ -192,7 +192,7 @@ class Inputs {
     }
     let ShadowPts = [...renewed.flat()];
     let newShadowPts = [];
-    console.log(ShadowPts);
+    // console.log(ShadowPts);
     for (let i = 0; i < ShadowPts.length; i++) {
       for (let j = i + 1; j < ShadowPts.length; j++) {
         if (ShadowPts[i].equals(ShadowPts[j])) {
@@ -206,7 +206,7 @@ class Inputs {
         newShadowPts.push(ShadowPts[i]);
       }
     }
-    console.log(newShadowPts);
+    // console.log(newShadowPts);
     return newShadowPts;
   }
 
@@ -888,7 +888,7 @@ class Inputs {
           point2.z = -4;
           temArray1.push(point1, point2);
           app.receivedShadowsXY.push(temArray1);
-          console.log(temArray1);
+          // console.log(temArray1);
 
           //XY shadow
           for (let i = 0; i < temArray1.length; i++) {
@@ -1600,8 +1600,8 @@ class Inputs {
               app.allObjects[i].name !== 'empty' &&
               intersect.object.parent.id == app.allObjects[i].children[0].id
             ) {
-              console.log('delete');
-              console.log(intersect.object.parent.parent);
+              // console.log('delete');
+              // console.log(intersect.object.parent.parent);
               app.planeXZG.remove(intersect.object.parent.parent);
               app.allObjects.splice(i, 1, this.empty);
               app.receivedShadowsXY.splice(i - 1, 1, '[]');
@@ -1650,14 +1650,14 @@ class Inputs {
       const intersects = app.raycaster.intersectObjects(app.gameOverCubes);
       if (intersects.length > 0) {
         const intersect = intersects[0];
-        console.log(intersect.object);
-        console.log(app.finalGroup);
+        // console.log(intersect.object);
+        // console.log(app.finalGroup);
         if (app.renderer.xr.isPresenting) {
           controller.children[0].scale.z = intersect.distance + 3;
           if (controller.userData.squeezePressed) {
-            console.log(controller.userData.squeezePressed);
+            // console.log(controller.userData.squeezePressed);
             app.finalGroup.remove(intersect.object.parent);
-            console.log('removed');
+            // console.log('removed');
             app.gameOverCubes.splice(
               app.gameOverCubes.indexOf(intersect.object.parent),
               1
